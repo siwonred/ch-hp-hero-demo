@@ -77,7 +77,9 @@ class World {
   }
 
   tryToAddNewParticle() {
-    const r = Math.random() * Math.random() * Math.max(window.innerWidth, window.innerHeight, 800) * 1.5 + 80;
+    // const r = Math.random() * Math.random() * Math.max(window.innerWidth, window.innerHeight, 800) * 1.5 + 80;
+    const r = jStat.beta.sample(2, 5) * Math.max(window.innerWidth, window.innerHeight, 800) * 0.8 + 60 // Beta Distribution
+
     const theta = Math.random() * 2 * Math.PI;
 
     const point = new Point(r * Math.sin(theta), r * Math.cos(theta));
@@ -87,7 +89,7 @@ class World {
         return false;
       }
     }
-    const paricle = new Particle(this, point, getRandomInt(30, 40), randomEmoji(), randomColor());
+    const paricle = new Particle(this, point, getRandomInt(20, 40), randomEmoji(), randomColor());
     this.particles.push(paricle);
     return true;
   }
@@ -129,7 +131,7 @@ class World {
     const d = Point.distance(new Point(0, 0), particle.point);
 
     const shift = Math.max(window.innerWidth, window.innerHeight) / 2;
-    const ex = Math.exp(- (d - shift) / 400.0); // sigmoid
+    const ex = Math.exp(- (d - shift) / 200.0); // sigmoid
     const alpha = ex / (ex + 1);
 
     if (alpha < 0.01) {
